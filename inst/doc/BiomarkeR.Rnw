@@ -1,0 +1,59 @@
+%\VignetteIndexEntry{BiomarkeR}
+\documentclass[a4paper]{article}
+\title{Using BiomarkeR for identifying biomarker candidates and inferring networks}
+\author{Michael Netzer}
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Overview}
+Section \ref{sec:data} describes the required dataset structure and will give you an idea how to import an already existing example dataset. 
+Sections \ref{sec:pbi} and \ref{sec:ubi} explain how to rank attributes based on the Paired and Unpaired Biomarker Identifier. 
+Section \ref{sec:net} describes how to infer networks using pBI and uBI scores. 
+
+\section{Data import}
+\label{sec:data}
+Datasets used in \texttt{BiomarkeR} assume rows as attributes and columns as samples (in order to easily handle ExpressionSets).
+The example dataset can be loaded by:
+<<>>=
+library(BiomarkeR)
+data(BIdata)
+@
+BIdata includes an unpaired dataset (ubi.data) with the associated class column (ubi.class). 
+The paired dataset (pbi.data) comprises again the associated class column (pbi.class), and additionaly the sample ids (pbi.id).
+
+\section{Paired Biomarker Identifier}
+\label{sec:pbi}
+The Paired Biomarker Identifier (pBI) \cite{Baumgartner2010} calculates a score for every attribute representing its
+discriminatory ability using dependent samples. Using our paired dataset the pBI scores are calculated as follows:
+<<>>=
+pbi.scores <- pBI(dataset=pbi.data, classlabels=pbi.class, 
+referenceclasslabel="rest", ids=pbi.id, useMedian = T, 
+lambda = 100, plotScores = T, numTopRankedToPlot = 5)
+@
+As reference class we use class "rest". Here we plot the top five ranked attributes (numTopRankedToPlot = 5). 
+
+\section{Unpaired Biomarker Identifier}
+\label{sec:ubi}
+The Unpaired Biomarker Identifier (uBI) \cite{Baumgartner2010} calculates a score for every attribute representing its
+discriminatory ability using dependent samples. Using our unpaired dataset the uBI scores are calculated as follows:
+<<>>=
+ubi.scores <- uBI(dataset=ubi.data, classlabels=ubi.class, 
+referenceclasslabel="control", useMedian = TRUE, lambda = 100, 
+plotScores = TRUE, numTopRankedToPlot = 5)
+@
+As reference class we use class "control". Here we plot the top five ranked attributes (numTopRankedToPlot = 5). 
+
+\section{Infer network}
+\label{sec:net}
+Using our paired data we can infer and plot a network g by:
+<<>>=
+g <- pBIGraph(dataset=pbi.data, classlabels=pbi.class, 
+referenceclasslabel="rest", ids=pbi.id, useMedian = TRUE,  
+lambda = 100, threshold = "q90", plotGraph = FALSE, edge.file = NULL)
+@
+If edge.file $\neq$ NULL an edgfile will be created that can be imported in e.g. Cytoscape \cite{Cline2007}. By default, the 90\% percentile will be used as threshold
+for defining an edge. Finally, a graph will be created that can be further analyzed using e.g. the R package QuACN \cite{Mueller2010}. 
+
+\bibliographystyle{plain}
+\bibliography{BiomarkeR}
+\end{document}
