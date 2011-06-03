@@ -50,11 +50,8 @@ Michael Netzer, michael.netzer@umit.at
 \note{
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
+\seealso{\code{\link{uBI}}, \code{\link{pBIGraph}}, \code{\link{uBIGraph}}}
 
-\seealso{
-See Also as \code{\link{uBI}}, 
-}
 \examples{
 data(BIdata)
 pbi.scores <- pBI(dataset=pbi.data, classlabels=pbi.class, referenceclasslabel="rest", ids=pbi.id, useMedian = TRUE, lambda = 100, plotScores = TRUE, numTopRankedToPlot = 5)

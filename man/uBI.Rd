@@ -49,14 +49,10 @@ metabolic biomarkers after myocardial injury. Bioinformatics, 26(14), 1745-1751
 Michael Netzer, michael.netzer@umit.at
 }
 \note{
-%%  ~~further notes~~
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
+\seealso{\code{\link{pBI}}, \code{\link{pBIGraph}}, \code{\link{uBIGraph}}}
 
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 data(BIdata)
 ubi.scores <- uBI(dataset=ubi.data, classlabels=ubi.class, referenceclasslabel="control", useMedian = TRUE, lambda = 100, plotScores = FALSE, numTopRankedToPlot = 5)

@@ -77,7 +77,7 @@ uBI <- function(dataset, classlabels, referenceclasslabel, useMedian = TRUE, lam
 				cv.comp <- sd(x.comp)/mean(x.comp)
 				cv.ref <- sd(x.ref)/mean(x.ref)
 				ratio = cv.ref / cv.comp
-				if (ratio < 1)
+				if (abs(ratio) < 1)
 						ratio <- 1
 				uBI <- lambda * tp2 * sqrt(abs(ratio * delta))* sign(delta)
 			}

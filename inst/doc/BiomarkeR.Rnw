@@ -30,6 +30,19 @@ pbi.scores <- pBI(dataset=pbi.data, classlabels=pbi.class,
 referenceclasslabel="rest", ids=pbi.id, useMedian = T, 
 lambda = 100, plotScores = T, numTopRankedToPlot = 5)
 @
+The resulting boxplot is
+\begin{center}
+<<fig=TRUE,echo=FALSE>>=
+scores <- pBI(dataset=pbi.data, classlabels=pbi.class, referenceclasslabel="rest", ids=pbi.id, useMedian = TRUE, lambda = 100, plotScores = FALSE, numTopRankedToPlot = 5)
+numTopRanked <- 5
+zoom <- 1
+scoresRanked <- scores[match(sort(abs(scores), decreasing = TRUE), abs(scores))]
+scoresTopRanked <- scoresRanked[1:numTopRanked]
+cols <- ifelse(scoresTopRanked >= 0, "red", "blue")
+method = "pBI"
+barplot(scoresTopRanked, main =paste(method, " scores (top ", numTopRanked, "ranked attributes)", sep=" "), ylab=method, col=cols, cex.axis = zoom, cex.names=zoom, cex.lab=zoom, cex.main=zoom)  
+@
+\end{center}
 As reference class we use class "rest". Here we plot the top five ranked attributes (numTopRankedToPlot = 5). 
 
 \section{Unpaired Biomarker Identifier}
@@ -41,16 +54,39 @@ ubi.scores <- uBI(dataset=ubi.data, classlabels=ubi.class,
 referenceclasslabel="control", useMedian = TRUE, lambda = 100, 
 plotScores = TRUE, numTopRankedToPlot = 5)
 @
+The resulting boxplot is
+\begin{center}
+<<fig=TRUE,echo=FALSE>>=
+scores <- uBI(dataset=ubi.data, classlabels=ubi.class, referenceclasslabel="control", useMedian = TRUE, lambda = 100, plotScores = FALSE, numTopRankedToPlot = 5)
+numTopRanked <- 5
+zoom <- 1
+scoresRanked <- scores[match(sort(abs(scores), decreasing = TRUE), abs(scores))]
+scoresTopRanked <- scoresRanked[1:numTopRanked]
+cols <- ifelse(scoresTopRanked >= 0, "red", "blue")
+method = "uBI"
+barplot(scoresTopRanked, main =paste(method, " scores (top ", numTopRanked, "ranked attributes)", sep=" "), ylab=method, col=cols, cex.axis = zoom, cex.names=zoom, cex.lab=zoom, cex.main=zoom)  
+@
+\end{center}
 As reference class we use class "control". Here we plot the top five ranked attributes (numTopRankedToPlot = 5). 
 
 \section{Infer network}
 \label{sec:net}
 Using our paired data we can infer and plot a network g by:
-<<>>=
+<<fig=FALSE,echo=TRUE>>=
 g <- pBIGraph(dataset=pbi.data, classlabels=pbi.class, 
 referenceclasslabel="rest", ids=pbi.id, useMedian = TRUE,  
 lambda = 100, threshold = "q90", plotGraph = FALSE, edge.file = NULL)
+plot(g,"neato")
 @
+The resulting plot is
+\begin{center}
+<<fig=TRUE,echo=FALSE>>=
+g <- pBIGraph(dataset=pbi.data, classlabels=pbi.class, 
+referenceclasslabel="rest", ids=pbi.id, useMedian = TRUE,  
+lambda = 100, threshold = "q90", plotGraph = FALSE, edge.file = NULL)
+plot(g,"neato")
+@
+\end{center}
 If edge.file $\neq$ NULL an edgfile will be created that can be imported in e.g. Cytoscape \cite{Cline2007}. By default, the 90\% percentile will be used as threshold
 for defining an edge. Finally, a graph will be created that can be further analyzed using e.g. the R package QuACN \cite{Mueller2010}. 
 

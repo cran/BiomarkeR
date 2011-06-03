@@ -52,14 +52,10 @@ A graph as a graphNEL object.
 Michael Netzer, michael.netzer@umit.at
 }
 \note{
-%%  ~~further notes~~
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
+\seealso{\code{\link{pBIGraph}}, \code{\link{pBI}}, \code{\link{uBI}}}
 
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 data(BIdata)
 g <- uBIGraph(dataset=ubi.data, classlabels=ubi.class, referenceclasslabel="control", useMedian = TRUE, lambda = 100, threshold = "q90", plotGraph = FALSE, edge.file = NULL)
