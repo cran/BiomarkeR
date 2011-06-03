@@ -4,9 +4,8 @@
 \title{Paired Biomarker Identifier (pBI)}
 \description{Calculates a score for every attribute representing its discriminatory ability. The pBI method adresses dependent samples.}
 \usage{
-pBI(dataset, classlabels, referenceclasslabel, ids, useMedian = TRUE, lambda = 100, plotScores = TRUE, numTopRankedToPlot = 10)
+pBI(dataset, classlabels, referenceclasslabel, ids, useMedian = TRUE, lambda = 100, plotScores = TRUE, numTopRankedToPlot = 10, bars.cols = c("red","blue"))
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{dataset}{
 	Dataset where rows are attributes and columns are samples. 
@@ -31,6 +30,9 @@ pBI(dataset, classlabels, referenceclasslabel, ids, useMedian = TRUE, lambda = 1
 }
   \item{numTopRankedToPlot}{
 	Number of top ranked attributes to be plotted (if plotScores=TRUE).
+}
+  \item{bars.cols}{
+	Vector with two colors (first color for bars >= 0, second color for bars < 0).
 }
 }
 \details{

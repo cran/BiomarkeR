@@ -7,9 +7,8 @@ Unpaired Biomarker Identifier (uBI)
 Calculates a score for every attribute representing its discriminatory ability. The uBI method adresses independent samples.
 }
 \usage{
-uBI(dataset, classlabels, referenceclasslabel, useMedian = TRUE, lambda = 100, plotScores = TRUE, numTopRankedToPlot = 10)
+uBI(dataset, classlabels, referenceclasslabel, useMedian = TRUE, lambda = 100, plotScores = TRUE, numTopRankedToPlot = 10, bars.cols = c("red","blue"))
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{dataset}{
 	Dataset where rows are attributes and columns are samples.
@@ -24,13 +23,16 @@ uBI(dataset, classlabels, referenceclasslabel, useMedian = TRUE, lambda = 100, p
 	Whether to use median (default) or mean as location parameter.
 }
   \item{lambda}{
-%%     ~~Describe \code{lambda} here~~
+	Scaling factor for the scores. 
 }
   \item{plotScores}{
 	If true, a barplot with top ranked attributes is created.
 }
   \item{numTopRankedToPlot}{
 	Number of top ranked attributes to be plotted (if plotScores=TRUE).
+}
+  \item{bars.cols}{
+	Vector with two colors (first color for bars >= 0, second color for bars < 0).
 }
 }
 \details{
