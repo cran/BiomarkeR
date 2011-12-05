@@ -24,6 +24,7 @@ Michael Netzer <michael.netzer@umit.at>
 \references{
 Baumgartner, C., Lewis, G. D., Netzer, M., Pfeifer, B., and Gerszten, R. E. (2010). A new data mining approach for profiling and categorizing kinetic patterns of
 metabolic biomarkers after myocardial injury. Bioinformatics, 26(14), 1745-751
+Netzer, M., Weinberger, KM., Handler M., Seger M., Fang X., Kugler, KG., Graber, A., Baumgartner, C., Profiling the Human Response to Physical Exercise: A Computational Strategy for the Identification and Kinetic Analysis of Metabolic Biomarkers, J Clin Bioinforma, accepted, 2011
 }
 
 \keyword{ ts }

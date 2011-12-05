@@ -44,7 +44,7 @@ uBIGraph(dataset, classlabels, referenceclasslabel, useMedian = TRUE, lambda = 1
 	score of the ratio is greater than a user defined threshold. 
 }
 \value{
-A graph as a graphNEL object.
+A graph as a igraph object.
 }
 \references{
 }

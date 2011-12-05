@@ -1,0 +1,15 @@
+00351d46aeb77201d7efa92953d331f9 *DESCRIPTION
+012592abf4b40a8d741b299df2ded05a *NAMESPACE
+e76ea1311b60b9b6e3bd8f8deeb9bba3 *R/BI.R
+7a0ea20bfc884cb5453e7d6b9214f3b3 *R/inferBIGraph.R
+b1e768567ca0c0926c84a97f04ab2e77 *data/BIdata.RData
+7a647396d4a98d086d176cdf9e043bb2 *inst/doc/BiomarkeR.Rnw
+1b7b1c94d7129d8b2ca017ce92d881ce *inst/doc/BiomarkeR.bib
+b4670660986aa6d4ace9bc6e3ae23940 *inst/doc/BiomarkeR.pdf
+7227400f7a0811edef0d151755c35e9b *man/BIdata.RData.Rd
+0b9fffb1b9eb4aec7a2efeeb66f2dd51 *man/BiomarkeR-internal.Rd
+3712255fc4fd0db0247d2b129d93c4f5 *man/BiomarkeR-package.Rd
+5795d1bfb73de54c264cd4ad9231d04a *man/pBI.Rd
+8259120819e88d9d25f5743271c1a193 *man/pBIGraph.Rd
+91a2d738ef384be79e8a3b866de34a09 *man/uBI.Rd
+2fbeb34dad1e989d86acbc1763854003 *man/uBIGraph.Rd

@@ -1,16 +1,16 @@
 pBIGraph <- function(dataset, classlabels, referenceclasslabel, ids, useMedian = TRUE, lambda = 100, threshold = "q90", plotGraph = FALSE, edge.file = NULL)
 {
-	if(any(dataset==0))
-		stop("No zero values are allowed!")
+	if(any(dataset<0))
+		stop("No negative values are allowed!")
 	ratios  <- .calculateRatios(dataset)
 	biscores <- pBI(ratios, classlabels, referenceclasslabel, ids, useMedian = useMedian, lambda = lambda, plotScores = FALSE)
-	g <- .createGraph(biscores, nodes= rownames(dataset), threshold, edge.file, plotGraph)
+	g <- .createGraph(biscores, nodes = rownames(dataset), threshold, edge.file, plotGraph)
 	return(g)
 }
 
 uBIGraph <- function(dataset, classlabels, referenceclasslabel, useMedian = TRUE, lambda = 100, threshold = "q90", plotGraph = FALSE, edge.file = NULL)
 {
-	if(any(dataset==0))
+	if(any(dataset<0))
 		stop("No zero values are allowed!")
 	ratios  <- .calculateRatios(dataset)
 	biscores <- uBI(ratios, classlabels, referenceclasslabel, useMedian = useMedian, lambda = lambda, plotScores = FALSE)
@@ -21,7 +21,10 @@ uBIGraph <- function(dataset, classlabels, referenceclasslabel, useMedian = TRUE
 .createGraph <- function(biscores, nodes, threshold, edge.file, plotGraph)
 {
 	significant <- names(.getSignificantValues(abs(biscores), threshold))
+	if(length(significant)==0)
+		stop("There are no ratios higher than the defined threshold!")
 	g <- .getGraph(nodes, significant)
+	V(g)$label <- V(g)$name
 	if(!is.null(edge.file))
 		{
 			edgelist <- .getEdgelist(nodes, significant)
@@ -38,7 +41,7 @@ uBIGraph <- function(dataset, classlabels, referenceclasslabel, useMedian = TRUE
 	for(i in 1:(nrow(dataset)-1)){
 		for(j in (i+1):nrow(dataset))
 		{
-			temp <- rbind(temp, na.keep(dataset[i,]/dataset[j,]))
+			temp <- rbind(temp, abs(log2(na.keep(dataset[i,]/dataset[j,]))))
 			tnames <- c(tnames, paste(rownames(dataset)[i],rownames(dataset)[j], collapse="", sep="/"))
 		}
 	}
@@ -79,12 +82,16 @@ uBIGraph <- function(dataset, classlabels, referenceclasslabel, useMedian = TRUE
 {
 	if(length(nodes)==0)
 		stop("Number of nodes is zero!")
-	g <- NULL
-	g <- new("graphNEL", nodes = nodes)
+		
+	adjmat <- matrix(data=NA,nrow=length(nodes),ncol=length(nodes))
+	rownames(adjmat) <- nodes
+	colnames(adjmat) <- nodes
 	for(i in 1:length(edges)){
-	   temp <- edges[i]
-	   temp <- unlist(strsplit(temp, edge.splitchar))
-	   g <- addEdge(temp[1], temp[2], g)
+		temp <- edges[i]
+		temp <- unlist(strsplit(temp, edge.splitchar))
+		adjmat[temp[1], temp[2]] <- 1
+		adjmat[temp[2], temp[1]] <- 1
 	}
+	g <- igraph::graph.adjacency(adjmat, mode="undirected")
 	return(g)
 }

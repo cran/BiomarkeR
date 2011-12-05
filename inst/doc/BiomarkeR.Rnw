@@ -27,8 +27,8 @@ The Paired Biomarker Identifier (pBI) \cite{Baumgartner2010} calculates a score 
 discriminatory ability using dependent samples. Using our paired dataset the pBI scores are calculated as follows:
 <<>>=
 pbi.scores <- pBI(dataset=pbi.data, classlabels=pbi.class, 
-referenceclasslabel="rest", ids=pbi.id, useMedian = T, 
-lambda = 100, plotScores = T, numTopRankedToPlot = 5)
+referenceclasslabel="rest", ids=pbi.id, useMedian = TRUE, 
+lambda = 100, plotScores = TRUE, numTopRankedToPlot = 5)
 @
 The resulting boxplot is
 \begin{center}
@@ -71,24 +71,27 @@ As reference class we use class "control". Here we plot the top five ranked attr
 
 \section{Infer network}
 \label{sec:net}
-Using our paired data we can infer and plot a network g by:
+Using our paired data we can infer and plot a network g by \cite{Netzer2011}:
 <<fig=FALSE,echo=TRUE>>=
 g <- pBIGraph(dataset=pbi.data, classlabels=pbi.class, 
 referenceclasslabel="rest", ids=pbi.id, useMedian = TRUE,  
-lambda = 100, threshold = "q90", plotGraph = FALSE, edge.file = NULL)
-plot(g,"neato")
+lambda = 100, threshold = "73", plotGraph = FALSE, edge.file = NULL)
+plot(g,layout=layout.fruchterman.reingold)
 @
 The resulting plot is
 \begin{center}
 <<fig=TRUE,echo=FALSE>>=
 g <- pBIGraph(dataset=pbi.data, classlabels=pbi.class, 
 referenceclasslabel="rest", ids=pbi.id, useMedian = TRUE,  
-lambda = 100, threshold = "q90", plotGraph = FALSE, edge.file = NULL)
-plot(g,"neato")
+lambda = 100, threshold = "73", plotGraph = FALSE, edge.file = NULL)
+plot(g, layout=layout.fruchterman.reingold, vertex.label.family="Helvetica",
+     edge.label.family="Helvetica", vertex.label.cex=0.7,
+     edge.label.cex=0.7)
 @
 \end{center}
-If edge.file $\neq$ NULL an edgfile will be created that can be imported in e.g. Cytoscape \cite{Cline2007}. By default, the 90\% percentile will be used as threshold
-for defining an edge. Finally, a graph will be created that can be further analyzed using e.g. the R package QuACN \cite{Mueller2010}. 
+If edge.file $\neq$ NULL an edgfile will be created that can be imported in e.g. Cytoscape \cite{Cline2007}. 
+By default, the 90\% percentile will be used as threshold for defining an edge. 
+Finally, a graph will be created that can be further analyzed using e.g. the R package QuACN \cite{Mueller2010}. 
 
 \bibliographystyle{plain}
 \bibliography{BiomarkeR}

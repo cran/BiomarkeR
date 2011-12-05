@@ -14,8 +14,8 @@ pBI <- function(dataset, classlabels, referenceclasslabel, ids, useMedian = TRUE
 		stop("Number of ids must be equal to number of samples!")
 	if(sum(is.na(dataset))>0)
 		stop("No missing values are allowed!")
-	if(any(dataset==0))
-		stop("No zero values are allowed!")
+	if(any(dataset<0))
+		stop("No negative values are allowed!")
 	dataset.reference <-  dataset[,classlabels==referenceclasslabel]
 	dataset.comp <- dataset[,classlabels!=referenceclasslabel]
 	dataset.reference.ids <- ids[classlabels==referenceclasslabel]
@@ -24,8 +24,9 @@ pBI <- function(dataset, classlabels, referenceclasslabel, ids, useMedian = TRUE
 	if(sum(dim(dataset.comp)!=dim(dataset.reference))> 0)
 		stop("Dataset to compare and reference dataset must have same dimension!")
 	dataset <- .calcPercentageChange(dataset.comp, dataset.reference)
-
-	 pBIScores <- apply(dataset, 1, function(x){
+	dataset[is.infinite(dataset)] <- NA
+	pBIScores <- apply(dataset, 1, function(x){
+		x <- x[!is.na(x)]
 		da <- .getDA(x, mu=0)
 		locPar <- ifelse(useMedian, median(x), mean(x))
 		delta <- ((abs(locPar)/100) + 1 ) * sign(locPar)
@@ -57,6 +58,8 @@ uBI <- function(dataset, classlabels, referenceclasslabel, useMedian = TRUE, lam
 		stop("Reference classlabel must be a valid classlabel!")
 	if(sum(is.na(dataset))> 0)
 		stop("No missing values are allowed!")
+	if(any(dataset<0))
+		stop("No negative values are allowed!")
 	uBIScores <- apply(dataset, 1, function(x){
 		tp2 <- .getTP2(x, classlabels, referenceclasslabel)
 		x.ref <- x[classlabels==referenceclasslabel]
